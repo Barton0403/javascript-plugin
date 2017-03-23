@@ -1,0 +1,25 @@
+{
+  "name": "javascript-plugin",
+  "version": "1.0.0",
+  "description": "web plugin library make myself. Use grunt, scss, es6...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "barton",
+  "license": "ISC",
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "jquery.easing": "^1.4.1",
+    "normalize.css": "^5.0.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.0",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^2.0.0",
+    "load-grunt-tasks": "^3.5.2"
+  }
+}

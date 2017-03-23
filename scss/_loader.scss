@@ -1,0 +1,24 @@
+.loader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  background-color: #fff;
+}
+
+.loader.loading {
+  display: block;
+}
+
+.loader img {
+  display: block;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}

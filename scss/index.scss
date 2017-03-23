@@ -1,0 +1,123 @@
+@import 'reset';
+@import 'util';
+@import 'loader';
+
+$banner-width: 900px;
+$banner-height: 600px;
+$len: 6;
+
+.banner {
+    width: $banner-width;
+    height: $banner-height;
+    overflow: hidden;
+    position: relative;
+
+    .bd {
+        width: $banner-width;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .banner_item {
+        width: $banner-width;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .control_bd {
+        display: none;
+
+        .control {
+            width: 50px;
+            height: 50px;
+            display: block;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            margin-top: -25px;
+            background: rgba(0, 0, 0, 0.43);
+            // IE背景透明写法，注意填满内部，
+            // 不然即使设置了高宽度，也触发不了hover等事件
+            filter: progid:DXImageTransform.Microsoft.gradient(
+              startColorstr=#7f000000,
+              endColorstr=#7f000000,
+              GradientType=0
+            );
+            border-radius: 50%;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: 2em;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            line-height: 50px;
+            overflow: hidden;
+
+            &:hover {
+              background: #04c1aa;
+              filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e504c1aa', endColorstr='#e504c1aa', GradientType=0);
+            }
+        }
+
+        .prev {
+            @extend .control;
+
+            &:before {
+              content: "\f104";
+              display: block;
+              width: 50px;
+              height: 50px;
+              text-align: center;
+              margin-left: -2px;
+            }
+        }
+
+        .next {
+            @extend .control;
+            left: auto;
+            right: 10px;
+
+            &:before {
+              content: "\f105";
+              display: block;
+              width: 50px;
+              height: 50px;
+              text-align: center;
+              margin-right: -2px;
+            }
+        }
+    }
+
+    &:hover .control_bd {
+      display: block;
+    }
+
+    .index_bd {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        padding-left: 10px;
+        // transform: translate(-50%, 0); // IE8不兼容
+
+        > a {
+            display: block;
+            float: left;
+            width: 10px;
+            height: 10px;
+            padding-top: 10px;
+            overflow: hidden;
+            margin-right: 10px;
+            background: #eaeaea;
+            border-radius: 10px;
+
+          &.active {
+            background: #04c1aa;
+          }
+        }
+    }
+}
