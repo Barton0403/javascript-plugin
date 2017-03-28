@@ -12,7 +12,8 @@ module.exports = (grunt) => {
             dist: {
                 files: {
                     'dist/js/banner.js': 'js/banner.js',
-                    'dist/js/loader.js': 'js/loader.js'
+                    'dist/js/loader.js': 'js/loader.js',
+                    'dist/js/form.cache.js': 'js/form.cache.js'
                 }
             }
         },
@@ -22,7 +23,8 @@ module.exports = (grunt) => {
             },
             dist: {
                 files: {
-                    'dist/css/index.css': 'scss/index.scss'
+                    'dist/css/index.css': 'scss/index.scss',
+                    'dist/css/form.css': 'scss/form.scss'
                 }
             }
         },

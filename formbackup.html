@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>表单本地缓存数据</title>
+  <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
+  <link rel="stylesheet" href="./dist/css/form.css">
+</head>
+<body>
+  <form class="AndroidForm" name="AndroidForm" action="" method="post">
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td class="listTdLeft">机器人数量：</td>
+          <td><input type="text" name="txtAndroidNum" class="input" value=""></td>
+        </tr>
+        <tr>
+          <td class="listTdLeft">服务时间：</td>
+          <td>
+            <select class="" name="ddlServerTime">
+              <option value=""></option>
+              <option value="0">00:00-01:00</option>
+              <option value="1">01:00-02:00</option>
+              <option value="2">02:00-03:00</option>
+              <option value="3">03:00-04:00</option>
+              <option value="4">04:00-05:00</option>
+              <option value="5">05:00-06:00</option>
+              <option value="6">06:00-07:00</option>
+              <option value="7">07:00-08:00</option>
+              <option value="8">08:00-09:00</option>
+              <option value="9">09:00-10:00</option>
+              <option value="10">10:00-11:00</option>
+              <option value="11">11:00-12:00</option>
+              <option value="12">12:00-13:00</option>
+              <option value="13">13:00-14:00</option>
+              <option value="14">14:00-15:00</option>
+              <option value="15">16:00-16:00</option>
+              <option value="16">16:00-17:00</option>
+              <option value="17">17:00-18:00</option>
+              <option value="18">18:00-19:00</option>
+              <option value="19">19:00-20:00</option>
+              <option value="20">20:00-21:00</option>
+              <option value="21">21:00-22:00</option>
+              <option value="22">22:00-23:00</option>
+              <option value="23">23:00-24:00</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="listTdLeft">功能：</td>
+          <td>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="pdr10">
+                    <input type="checkbox" name="chkFunc" class="valign-m" value="1"><label class="valign-m" for="chkFunc">自动寻找敌人</label>
+                  </td>
+                  <td class="pdr10">
+                    <input type="checkbox" name="chkFunc" class="valign-m" value="2"><label class="valign-m" for="chkFunc">自动回血</label>
+                  </td>
+                  <td class="pdr10">
+                    <input type="checkbox" name="chkFunc" class="valign-m" value="3"><label class="valign-m" for="chkFunc">自动回蓝</label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="listTdLeft">状态：</td>
+          <td>
+            <input type="radio" name="rNullity" class="valign-m" value="0"><label for="rNullity" class="valign-m">启用</label>
+            <input type="radio" name="rNullity" class="valign-m" value="1"><label for="rNullity" class="valign-m">禁用</label>
+          </td>
+        </tr>
+        <tr>
+          <td class="listTdLeft"></td>
+          <td>
+            <button type="button" class="lsSaveBtn">localStorage数据缓存</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="listTdLeft"></td>
+          <td><button type="submit" class="saveBtn">保存</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./dist/js/form.cache.js"></script>
+  <!-- livereload -->
+  <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
+  <script>
+    let f = new Form('.AndroidForm', {
+      formItemNames: [
+        'txtAndroidNum',
+        'ddlServerTime',
+        'chkFunc',
+        'rNullity'
+      ]
+    });
+
+    f.reset();
+
+    $('.lsSaveBtn').click(function() {
+      f.cache();
+    });
+
+    document.AndroidForm.onsubmit = function () {
+      f.clear();
+    };
+  </script>
+</body>
+</html>
