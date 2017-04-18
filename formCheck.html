@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表单异步验证</title>
+    <link rel="stylesheet" href="./dist/css/form.css">
+</head>
+
+<body>
+    <form id="form" action="" name="registerForm">
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td class="listTdLeft">用户名：</td>
+                    <td>
+                        <div>
+                            <input type="text" placeholder="" name="txtUserName" value="" class="input">
+                            <span class="state"></span>
+                        </div>
+                        <div class="msg txtUserNameMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">密码：</td>
+                    <td>
+                        <div>
+                            <input type="password" name="txtPassword" value="" class="input">
+                            <span class="state"></span>
+                        </div>
+                        <div class="msg txtPasswordMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">重复密码：</td>
+                    <td>
+                        <div>
+                            <input type="password" name="txtPassword2" value="" class="input">
+                            <span class="state"></span>
+                        </div>
+                        <div class="msg txtPassword2Msg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">手机号码：</td>
+                    <td>
+                        <div>
+                            <input type="text" name="txtMobilePhone" value="" class="input">
+                            <span class="state"></span>
+                        </div>
+                        <div class="msg txtMobilePhoneMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">验证码：</td>
+                    <td>
+                        <div>
+                            <input type="text" name="txtValidatorsCode" value="" class="input">
+                            <span class="state code"></span>
+                            <button type="button" class="getCodeBtn">发送验证码</button>
+                        </div>
+                        <div class="msg txtValidatorsCodeMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">固定电话：</td>
+                    <td>
+                        <div>
+                            <input type="text" name="txtTelephone" value="" class="input">
+                            <span class="state">需加上前缀如：051-****</span>
+                        </div>
+                        <div class="msg txtTelephoneMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft"></td>
+                    <td><button type="submit" class="btn-submit" style="width: 150px;">登录</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <!-- livereload -->
+    <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
+
+    <!-- jquery -->
+    <!-- IE8兼容 -->
+    <!--[if IE]>
+      <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if !IE]><!-->
+      <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <!--<![endif]-->
+
+    <script type="text/javascript" src="./dist/js/form.check.js"></script>
+    <script>
+        var form = new Form('#form', {
+            fields: {
+                txtUserName: {
+                    selector: '.txtUserNameMsg',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空',
+                        },
+                        stringLength: {
+                            max: 8,
+                            message: '用户名长度不能超过8个字符'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '用户名只可以包括数字、字母和._'
+                        }
+                    }
+                },
+                txtPassword: {
+                    selector: '.txtPasswordMsg',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空',
+                        },
+                        same: {
+                            field: 'txtPassword2',
+                            message: '两次密码不相同'
+                        }
+                    }
+                },
+                txtPassword2: {
+                    selector: '.txtPassword2Msg',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空',
+                        },
+                        same: {
+                            field: 'txtPassword',
+                            message: '两次密码不相同'
+                        }
+                    }
+                },
+                txtMobilePhone: {
+                    selector: '.txtMobilePhoneMsg',
+                    validators: {
+                        notEmpty: {
+                            message: '手机号码不能为空',
+                        },
+                        mobilePhone: {
+                            message: '手机号码格式不正确',
+                        }
+                    }
+                },
+                txtTelephone: {
+                    selector: '.txtTelephoneMsg',
+                    validators: {
+                        telephone: {
+                            message: '电话格式不正确'
+                        }
+                    }
+                },
+                txtValidatorsCode: {
+                    selector: '.txtValidatorsCodeMsg',
+                    validators: {
+                        notEmpty: {
+                            message: '验证码不能为空',
+                        },
+                        callback: {
+                            message: '验证码错误',
+                            callback: function (value) {
+                                var isOk = 0; // 默认验证失败
+                                $.ajax({
+                                    url: 'code.json',
+                                    type: 'get',
+                                    async: false,
+                                    success: function (response) {
+                                        if (response.code == value) {
+                                            isOk = 1;
+                                        } else {
+                                            isOk = 0;
+                                        }
+                                    }
+                                });
+
+                                return isOk === 1;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        $('.btn-submit').click(function (e) {
+            return form.check();
+        });
+
+        $('.getCodeBtn').click(function (e) {
+            $('.code').text(1213);
+        });
+    </script>
+</body>
+
+</html>

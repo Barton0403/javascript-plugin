@@ -13,7 +13,8 @@ module.exports = (grunt) => {
                 files: {
                     'dist/js/banner.js': 'js/banner.js',
                     'dist/js/loader.js': 'js/loader.js',
-                    'dist/js/form.cache.js': 'js/form.cache.js'
+                    'dist/js/form.cache.js': 'js/form.cache.js',
+                    'dist/js/form.check.js': 'js/form.check.js'
                 }
             }
         },
@@ -42,5 +43,5 @@ module.exports = (grunt) => {
 
     require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['babel', 'sass', 'watch']);
 };

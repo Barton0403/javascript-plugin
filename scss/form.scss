@@ -10,3 +10,7 @@
 .input {
   width: 150px;
 }
+
+.input.error {
+    border: 1px solid #e03406;
+}

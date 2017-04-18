@@ -82,18 +82,27 @@
         </tr>
         <tr>
           <td class="listTdLeft"></td>
-          <td><button type="submit" class="saveBtn">保存</button></td>
+          <td><button type="submit" class="saveBtn">提交</button></td>
         </tr>
       </tbody>
     </table>
   </form>
 
-  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- jquery -->
+  <!-- IE8兼容 -->
+  <!--[if IE]>
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
+  <![endif]-->
+  <!--[if !IE]><!-->
+    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <!--<![endif]-->
+
   <script src="./dist/js/form.cache.js"></script>
   <!-- livereload -->
-  <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
+  <!-- <script type="text/javascript" src="http://localhost:35729/livereload.js"></script> -->
+
   <script>
-    let f = new Form('.AndroidForm', {
+    var f = new Form('.AndroidForm', {
       formItemNames: [
         'txtAndroidNum',
         'ddlServerTime',
