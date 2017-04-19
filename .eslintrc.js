@@ -5,9 +5,11 @@ module.exports = {
         "commonjs": true
     },
     "globals": {
-      'jQuery': true,
-      'module': true,
-      'console': true
+        'console': true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -23,7 +25,11 @@ module.exports = {
             "error",
             "always"
         ],
-        "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
+        "no-unused-vars": ["warn", {
+            "vars": "all",
+            "args": "after-used",
+            "ignoreRestSiblings": false
+        }],
         "no-console": "off"
     }
 };

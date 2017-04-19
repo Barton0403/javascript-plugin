@@ -1,9 +1,18 @@
-const Form = (($) => {
+import jQuery from 'jquery';
 
-    class Form {
+/**************************************************************
+ * 表单检测插件
+ * 1、支持text, selector, checkbox, radio, textarea等控件检测
+ * 2、自带telephone、email等验证
+ ***************************************************************/
+
+const FormCheck = (($) => {
+
+    class FormCheck {
         constructor(selector, options) {
             this.form = document.querySelector(selector);
             this.options = options;
+            this.states = {};
         }
 
         setDOM(msgEl, value, inputEl, cls) {
@@ -29,7 +38,22 @@ const Form = (($) => {
 
                 // 判断是否为空
                 if (fields[key].validators.notEmpty) {
-                    if (value.length < 1) {
+                    if (fields[key].type === 'checkbox') { // 区别多选项控件
+                        // 判断是否有选中的
+                        let hasChecked = false;
+                        for (let i = 0; i < inputEl.length; i++) {
+                            if (inputEl[i].checked) {
+                                hasChecked = true;
+                                break;
+                            }
+                        }
+
+                        if (!hasChecked) {
+                            isOk = 0;
+                            this.setDOM(msgEl, fields[key].validators.notEmpty.message, inputEl, 'error');
+                            continue;
+                        }
+                    } else if (value.length < 1) { // 一般控件
                         isOk = 0;
                         this.setDOM(msgEl, fields[key].validators.notEmpty.message, inputEl, 'error');
                         continue; // 验证不通过，不进行该值的后续验证，直接跳到下个值的验证
@@ -116,5 +140,7 @@ const Form = (($) => {
         }
     }
 
-    return Form;
+    return FormCheck;
 })(jQuery);
+
+export default FormCheck;

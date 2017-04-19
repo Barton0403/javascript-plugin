@@ -74,6 +74,36 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="listTdLeft">爱好：</td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="pdr10">
+                                        <input type="checkbox" name="chkFunc" class="valign-m" value="1"><label class="valign-m" for="chkFunc">打篮球</label>
+                                    </td>
+                                    <td class="pdr10">
+                                        <input type="checkbox" name="chkFunc" class="valign-m" value="2"><label class="valign-m" for="chkFunc">玩游戏</label>
+                                    </td>
+                                    <td class="pdr10">
+                                        <input type="checkbox" name="chkFunc" class="valign-m" value="3"><label class="valign-m" for="chkFunc">看电影</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="msg chkFuncMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">介绍：</td>
+                    <td>
+                        <div>
+                            <textarea class="textarea" name="desc" id="" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="msg descMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
                     <td class="listTdLeft"></td>
                     <td></td>
                 </tr>
@@ -84,22 +114,35 @@
             </tbody>
         </table>
     </form>
-    <!-- livereload -->
-    <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
 
     <!-- jquery -->
-    <!-- IE8兼容 -->
+    <!-- <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script> -->
     <!--[if IE]>
-      <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
     <![endif]-->
-    <!--[if !IE]><!-->
-      <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
-    <!--<![endif]-->
 
+    <!-- 自制插件 -->
     <script type="text/javascript" src="./dist/js/form.check.js"></script>
     <script>
-        var form = new Form('#form', {
+        var form = new FormCheck('#form', {
             fields: {
+                chkFunc: {
+                    selector: '.chkFuncMsg',
+                    type: 'checkbox',
+                    validators: {
+                        notEmpty: {
+                            message: '爱好不能为空'
+                        }
+                    }
+                },
+                desc: {
+                    selector: '.descMsg',
+                    validators: {
+                        notEmpty: {
+                            message: '介绍不能为空'
+                        }
+                    }
+                },
                 txtUserName: {
                     selector: '.txtUserNameMsg',
                     validators: {

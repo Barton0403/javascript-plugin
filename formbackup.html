@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>表单本地缓存数据</title>
-  <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
-  <link rel="stylesheet" href="./dist/css/form.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表单本地缓存数据</title>
+    <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
+    <link rel="stylesheet" href="./dist/css/form.css">
 </head>
+
 <body>
-  <form class="AndroidForm" name="AndroidForm" action="" method="post">
-    <table width="100%">
-      <tbody>
-        <tr>
-          <td class="listTdLeft">机器人数量：</td>
-          <td><input type="text" name="txtAndroidNum" class="input" value=""></td>
-        </tr>
-        <tr>
-          <td class="listTdLeft">服务时间：</td>
-          <td>
-            <select class="" name="ddlServerTime">
+    <form class="AndroidForm" name="AndroidForm" action="" method="post">
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td class="listTdLeft">机器人数量：</td>
+                    <td><input type="text" name="txtAndroidNum" class="input" value=""></td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">服务时间：</td>
+                    <td>
+                        <select class="" name="ddlServerTime">
               <option value=""></option>
               <option value="0">00:00-01:00</option>
               <option value="1">01:00-02:00</option>
@@ -45,81 +47,106 @@
               <option value="22">22:00-23:00</option>
               <option value="23">23:00-24:00</option>
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td class="listTdLeft">功能：</td>
-          <td>
-            <table>
-              <tbody>
-                <tr>
-                  <td class="pdr10">
-                    <input type="checkbox" name="chkFunc" class="valign-m" value="1"><label class="valign-m" for="chkFunc">自动寻找敌人</label>
-                  </td>
-                  <td class="pdr10">
-                    <input type="checkbox" name="chkFunc" class="valign-m" value="2"><label class="valign-m" for="chkFunc">自动回血</label>
-                  </td>
-                  <td class="pdr10">
-                    <input type="checkbox" name="chkFunc" class="valign-m" value="3"><label class="valign-m" for="chkFunc">自动回蓝</label>
-                  </td>
+                    </td>
                 </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td class="listTdLeft">状态：</td>
-          <td>
-            <input type="radio" name="rNullity" class="valign-m" value="0"><label for="rNullity" class="valign-m">启用</label>
-            <input type="radio" name="rNullity" class="valign-m" value="1"><label for="rNullity" class="valign-m">禁用</label>
-          </td>
-        </tr>
-        <tr>
-          <td class="listTdLeft"></td>
-          <td>
-            <button type="button" class="lsSaveBtn">localStorage数据缓存</button>
-          </td>
-        </tr>
-        <tr>
-          <td class="listTdLeft"></td>
-          <td><button type="submit" class="saveBtn">提交</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
+                <tr>
+                    <td class="listTdLeft">功能：</td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="pdr10">
+                                        <input type="checkbox" name="chkFunc" class="valign-m" value="1"><label class="valign-m" for="chkFunc">自动寻找敌人</label>
+                                    </td>
+                                    <td class="pdr10">
+                                        <input type="checkbox" name="chkFunc" class="valign-m" value="2"><label class="valign-m" for="chkFunc">自动回血</label>
+                                    </td>
+                                    <td class="pdr10">
+                                        <input type="checkbox" name="chkFunc" class="valign-m" value="3"><label class="valign-m" for="chkFunc">自动回蓝</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">状态：</td>
+                    <td>
+                        <input type="radio" name="rNullity" checked class="valign-m" value="0"><label for="rNullity" class="valign-m">启用</label>
+                        <input type="radio" name="rNullity" class="valign-m" value="1"><label for="rNullity" class="valign-m">禁用</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">介绍：</td>
+                    <td>
+                        <textarea name="descration" rows="8" cols="80"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft"></td>
+                    <td>
+                        <button type="button" class="lsSaveBtn">localStorage数据缓存</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft"></td>
+                    <td><button type="submit" class="saveBtn">提交</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
 
-  <!-- jquery -->
-  <!-- IE8兼容 -->
-  <!--[if IE]>
+    <!-- jquery -->
+    <!-- IE8兼容 -->
+    <!--[if IE]>
     <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
   <![endif]-->
-  <!--[if !IE]><!-->
+    <!--[if !IE]><!-->
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
-  <!--<![endif]-->
+    <!--<![endif]-->
 
-  <script src="./dist/js/form.cache.js"></script>
-  <!-- livereload -->
-  <!-- <script type="text/javascript" src="http://localhost:35729/livereload.js"></script> -->
+    <script src="./dist/js/form.cache.js"></script>
+    <!-- livereload -->
+    <!-- <script type="text/javascript" src="http://localhost:35729/livereload.js"></script> -->
 
-  <script>
-    var f = new Form('.AndroidForm', {
-      formItemNames: [
-        'txtAndroidNum',
-        'ddlServerTime',
-        'chkFunc',
-        'rNullity'
-      ]
-    });
+    <script>
+        var f = null;
+        if (window.localStorage) {
+            f = new FormCache('.AndroidForm', {
+               fields: {
+                   txtAndroidNum: {
+                       type: 'text'
+                   },
+                   ddlServerTime: {
+                       type: 'select'
+                   },
+                   chkFunc: {
+                       type: 'checkbox'
+                   },
+                   rNullity: {
+                       type: 'radio'
+                   },
+                   descration: {
+                       type: 'textarea'
+                   }
+               }
+           });
+       } else {
+           alert('该浏览器不支持本地储存');
+       }
 
-    f.reset();
+        f.reset(function () {
+            alert('成功还原数据');
+        });
 
-    $('.lsSaveBtn').click(function() {
-      f.cache();
-    });
+        $('.lsSaveBtn').click(function() {
+            f.cache();
+        });
 
-    document.AndroidForm.onsubmit = function () {
-      f.clear();
-    };
-  </script>
+        document.AndroidForm.onsubmit = function() {
+            f.clear();
+        };
+    </script>
 </body>
+
 </html>

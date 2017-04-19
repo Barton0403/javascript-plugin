@@ -5,14 +5,19 @@ module.exports = (grunt) => {
                 sourceMap: true,
                 presets: [
                   ['es2015', {
-                    loose: true // 兼容IE8
+                    loose: true, // 兼容IE8
+                    module: false
                   }]
-                ]
+              ],
+              plugins: [
+                'transform-es2015-modules-strip'
+              ]
             },
             dist: {
                 files: {
                     'dist/js/banner.js': 'js/banner.js',
                     'dist/js/loader.js': 'js/loader.js',
+                    'dist/js/form.js': 'js/form.js',
                     'dist/js/form.cache.js': 'js/form.cache.js',
                     'dist/js/form.check.js': 'js/form.check.js'
                 }

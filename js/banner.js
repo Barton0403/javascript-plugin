@@ -1,3 +1,5 @@
+import jQuery from 'jquery';
+
 /**************************************************************
 * banner轮播插件
 * 1、实现无缝轮播
@@ -229,3 +231,5 @@ const Banner = (($) => {
 
   return Banner;
 })(jQuery);
+
+export default Banner;

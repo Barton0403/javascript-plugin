@@ -1,102 +1,129 @@
 /**************************************************************
  * 表单缓存插件
  * 1、使用localStorage进行数据缓存
- * 2、支持text, selector, checkbox, radio等控件缓存
- * 3、checkbox使用数组保存数据
+ * 2、支持text, selector, checkbox, radio, textarea等控件缓存
+ * 3、checkbox多数据使用','分隔保存数据
+ * 4、数据统一储存在formData属性中，以'&'分隔
  ***************************************************************/
 
-const Form = (($) => {
+const FormCache = (() => {
     const localStorage = window.localStorage;
 
-    class Form {
+    class FormCache {
         constructor(selector, options) {
             this.form = document.querySelector(selector);
-            this.options = {
-                formItemNames: []
-            };
-
+            this.options = options;
             this.states = {};
-
-            if (options) $.extend(this.options, options);
         }
 
         cache() {
             const {
-                formItemNames
+                fields
             } = this.options;
-            const _this = this;
 
-            // 验证
-            if (!localStorage) {
-                alert('该浏览器不支本地缓存');
-                return;
-            }
-
-            // 获取需缓存控件的值
-            for (let i = 0; i < formItemNames.length; i++) {
-                let formItem = this.form[formItemNames[i]];
-
-                // 多选项控件特殊处理
-                console.log(formItem);
-                if (Object.prototype.toString.call(formItem) === '[object RadioNodeList]' && formItem[0].type === 'checkbox') {
-                    this.states[formItemNames[i]] = [];
-                    for (let j = 0; j < formItem.length; j++) {
-                        if (formItem[j].checked)
-                            this.states[formItemNames[i]].push(formItem[j].value);
+            for (let key in fields) {
+                if (fields[key].type === 'checkbox') {
+                    this.states[key] = [];
+                    for (let i = 0; i < this.form[key].length; i++) {
+                        if (this.form[key][i].checked) {
+                            this.states[key].push(this.form[key][i].value);
+                        }
                     }
-
-                    // 将数组转换为字符串存入
-                    // localStorage.setItem(formItemNames[i], _this.states[formItemNames[i]].join());
-                    console.log(formItemNames[i], _this.states[formItemNames[i]].join());
-                    console.log(1);
                     continue;
                 }
 
-                this.states[formItemNames[i]] = formItem.value;
-                console.log(formItemNames[i], formItem.value);
-                //localStorage.setItem(formItemNames[i], formItem.value);
+                if (fields[key].type === 'radio') {
+                    for (let i = 0; i < this.form[key].length; i++) {
+                        if (this.form[key][i].checked) {
+                            this.states[key] = this.form[key][i].value;
+                            break;
+                        }
+                    }
+                    continue;
+                }
+
+                this.states[key] = this.form[key].value;
+            }
+
+            this.setField2localStorage();
+        }
+
+        // fields储存在一个属性中
+        setField2localStorage() {
+            let arr = [];
+
+            for (let key in this.states) {
+                // 数组转字符串
+                if (Object.prototype.toString.call(this.states[key]) === '[object Array]') {
+                    arr.push(key + '=' + this.states[key].join());
+                    continue;
+                }
+
+                arr.push(key + '=' + this.states[key]);
+            }
+
+            localStorage.setItem('formData', arr.join('&'));
+        }
+
+        getFieldFromlocalStorage() {
+            let arr = localStorage.getItem('formData').split('&');
+
+            for (let i = 0; i < arr.length; i++) {
+                let arr2 = arr[i].split('=');
+
+                if (arr2[1].indexOf(',') != -1) {
+                    this.states[arr2[0]] = arr2[1].split(',');
+                    continue;
+                }
+
+                this.states[arr2[0]] = arr2[1];
             }
         }
 
-        reset() {
+        reset(callback) {
             const {
-                formItemNames
+                fields
             } = this.options;
 
-            for (let i = 0; i < formItemNames.length; i++) {
-                // 不存在缓存直接跳过此次循环
-                if (!localStorage[formItemNames[i]]) continue;
+            if (!localStorage.getItem('formData')) return;
 
-                let formItem = this.form[formItemNames[i]];
+            this.getFieldFromlocalStorage();
 
-                // 多选项控件特殊处理
-                if (formItem.toString() === '[object RadioNodeList]' && formItem[0].type === 'checkbox') {
-                    // 将数组转换为字符串存入
-                    let arrs = this.states[formItemNames[i]] = localStorage.getItem(formItemNames[i]).split(',');
-
-                    for (let j = 0; j < arrs.length; j++) {
-                        for (let k = 0; k < formItem.length; k++) {
-                            if (formItem[k].value === arrs[j]) formItem[k].checked = true;
+            for (let key in fields) {
+                if (fields[key].type === 'checkbox') {
+                    for (let i = 0; i < this.form[key].length; i++) {
+                        for (let j = 0; j < this.states[key].length; j++) {
+                            if (this.form[key][i].value == this.states[key][j]) {
+                                this.form[key][i].checked = true;
+                                break;
+                            }
                         }
                     }
-
                     continue;
                 }
 
-                formItem.value = this.states[formItemNames[i]] = localStorage.getItem(formItemNames[i]);
+                if (fields[key].type === 'radio') {
+                    for (let i = 0; i < this.form[key].length; i++) {
+                        if (this.form[key][i].value == this.states[key]) {
+                            this.form[key][i].checked = true;
+                            break;
+                        }
+                    }
+                    continue;
+                }
+
+                this.form[key].value = this.states[key];
             }
+
+            callback.call(this);
         }
 
         clear() {
-            const {
-                formItemNames
-            } = this.options;
-
-            for (let i = 0; i < formItemNames.length; i++) {
-                localStorage.removeItem(formItemNames[i]);
-            }
+            localStorage.removeItem('formData');
         }
     }
 
-    return Form;
-})(jQuery);
+    return FormCache;
+})();
+
+export default FormCache;
