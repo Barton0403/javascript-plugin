@@ -43,6 +43,26 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="listTdLeft">初始金额：</td>
+                    <td>
+                        <div>
+                            <input type="text" name="txtMoney" value="" class="input">
+                            <span class="state"></span>
+                        </div>
+                        <div class="msg txtMoneyMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">年龄：</td>
+                    <td>
+                        <div>
+                            <input type="text" name="txtAge" value="" class="input">
+                            <span class="state"></span>
+                        </div>
+                        <div class="msg txtAgeMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
                     <td class="listTdLeft">手机号码：</td>
                     <td>
                         <div>
@@ -61,6 +81,17 @@
                             <button type="button" class="getCodeBtn">发送验证码</button>
                         </div>
                         <div class="msg txtValidatorsCodeMsg color-red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="listTdLeft">图片验证码：</td>
+                    <td>
+                        <div>
+                            <input type="text" name="txtImgValidatorsCode" value="" class="input">
+                            <img src="#" alt="1213">
+                            <span class="state"></span>
+                        </div>
+                        <div class="msg txtImgValidatorsCodeMsg color-red"></div>
                     </td>
                 </tr>
                 <tr>
@@ -115,11 +146,12 @@
         </table>
     </form>
 
-    <!-- jquery -->
-    <!-- <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script> -->
     <!--[if IE]>
-    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
+      <script type="text/javascript" src="./js/jquery-1.9.0.min.js"></script>
     <![endif]-->
+    <!--[if !IE]><!-->
+      <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <!--<![endif]-->
 
     <!-- 自制插件 -->
     <script type="text/javascript" src="./dist/js/form.check.js"></script>
@@ -130,6 +162,8 @@
                     selector: '.chkFuncMsg',
                     type: 'checkbox',
                     validators: {
+                        onblur: true,
+                        oninput: true,
                         notEmpty: {
                             message: '爱好不能为空'
                         }
@@ -138,6 +172,7 @@
                 desc: {
                     selector: '.descMsg',
                     validators: {
+                        onblur: true,
                         notEmpty: {
                             message: '介绍不能为空'
                         }
@@ -146,8 +181,10 @@
                 txtUserName: {
                     selector: '.txtUserNameMsg',
                     validators: {
+                        onblur: true,
+                        oninput: true,
                         notEmpty: {
-                            message: '用户名不能为空',
+                            message: '用户名不能为空'
                         },
                         stringLength: {
                             max: 8,
@@ -162,8 +199,9 @@
                 txtPassword: {
                     selector: '.txtPasswordMsg',
                     validators: {
+                        onblur: true,
                         notEmpty: {
-                            message: '密码不能为空',
+                            message: '密码不能为空'
                         },
                         same: {
                             field: 'txtPassword2',
@@ -174,8 +212,9 @@
                 txtPassword2: {
                     selector: '.txtPassword2Msg',
                     validators: {
+                        onblur: true,
                         notEmpty: {
-                            message: '密码不能为空',
+                            message: '密码不能为空'
                         },
                         same: {
                             field: 'txtPassword',
@@ -183,20 +222,53 @@
                         }
                     }
                 },
+                txtMoney: {
+                    selector: '.txtMoneyMsg',
+                    validators: {
+                        onblur: true,
+                        number: {
+                            type: 'float',
+                            message: '只允许输入数字'
+                        },
+                        range: {
+                            type: 'float',
+                            max: 1000,
+                            min: 0,
+                            message: '初始金额需大于等于0并且小于等于1000'
+                        }
+                    }
+                },
+                txtAge: {
+                    selector: '.txtAgeMsg',
+                    validators: {
+                        onblur: true,
+                        number: {
+                            type: 'Integer',
+                            message: '只允许输入整数'
+                        },
+                        range: {
+                            type: 'Integer',
+                            min: 0,
+                            message: '年龄不嫩小于0'
+                        }
+                    }
+                },
                 txtMobilePhone: {
                     selector: '.txtMobilePhoneMsg',
                     validators: {
+                        onblur: true,
                         notEmpty: {
-                            message: '手机号码不能为空',
+                            message: '手机号码不能为空'
                         },
                         mobilePhone: {
-                            message: '手机号码格式不正确',
+                            message: '手机号码格式不正确'
                         }
                     }
                 },
                 txtTelephone: {
                     selector: '.txtTelephoneMsg',
                     validators: {
+                        onblur: true,
                         telephone: {
                             message: '电话格式不正确'
                         }
@@ -205,27 +277,39 @@
                 txtValidatorsCode: {
                     selector: '.txtValidatorsCodeMsg',
                     validators: {
+                        onblur: true,
                         notEmpty: {
-                            message: '验证码不能为空',
+                            message: '验证码不能为空'
                         },
                         callback: {
                             message: '验证码错误',
                             callback: function (value) {
-                                var isOk = 0; // 默认验证失败
                                 $.ajax({
                                     url: 'code.json',
                                     type: 'get',
-                                    async: false,
                                     success: function (response) {
-                                        if (response.code == value) {
-                                            isOk = 1;
-                                        } else {
-                                            isOk = 0;
+                                        if (response.code != value) {
+                                            $('.txtValidatorsCodeMsg').text('验证码错误');
                                         }
                                     }
                                 });
 
-                                return isOk === 1;
+                                return true;
+                            }
+                        }
+                    }
+                },
+                txtImgValidatorsCode: {
+                    selector: '.txtImgValidatorsCodeMsg',
+                    validators: {
+                        onblur: true,
+                        notEmpty: {
+                            message: '图片验证码不能为空'
+                        },
+                        callback: {
+                            message: '验证码错误',
+                            callback: function (value) {
+                                return value == '1213';
                             }
                         }
                     }
@@ -234,7 +318,7 @@
         });
 
         $('.btn-submit').click(function (e) {
-            return form.check();
+            return form.checkAll();
         });
 
         $('.getCodeBtn').click(function (e) {
