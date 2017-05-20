@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
 
   <!-- font-awesome -->
-  <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css"> -->
   <!-- css plugin end -->
 
   <link rel="stylesheet" href="./dist/css/index.css">
@@ -26,13 +26,17 @@
     </div>
 
     <div class="index_bd">
-      <a href="javascript:void(0)" class="active">1</a>
-      <a href="javascript:void(0)">2</a>
+      <a href="javascript:void(0)" class="active" data-index="1"></a>
+      <a href="javascript:void(0)" data-index="2"></a>
     </div>
 
     <div class="control_bd">
-      <a href="javascript:void(0)" class="prev"></a>
-      <a href="javascript:void(0)" class="next"></a>
+      <a href="javascript:void(0)" class="prev">
+          <i class="icon icon-left-jt"></i>
+      </a>
+      <a href="javascript:void(0)" class="next">
+          <i class="icon icon-right-jt"></i>
+      </a>
     </div>
 
     <div class="loader loading">
@@ -59,8 +63,6 @@
   <!-- loader plugin -->
   <script type="text/javascript" src="./dist/js/loader.js"></script>
 
-  <!-- livereload -->
-  <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
   <!-- javascript plugin end -->
 
   <script>

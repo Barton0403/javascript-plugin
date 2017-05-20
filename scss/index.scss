@@ -1,6 +1,7 @@
 @import 'reset';
 @import 'util';
 @import 'loader';
+@import 'icon';
 
 $banner-width: 900px;
 $banner-height: 600px;
@@ -67,13 +68,18 @@ $len: 6;
         .prev {
             @extend .control;
 
-            &:before {
-              content: "\f104";
-              display: block;
-              width: 50px;
-              height: 50px;
-              text-align: center;
-              margin-left: -2px;
+            // &:before {
+            //   content: "\f104";
+            //   display: block;
+            //   width: 50px;
+            //   height: 50px;
+            //   text-align: center;
+            //   margin-left: -2px;
+            // }
+
+            .icon {
+                vertical-align: -2px;
+                *margin-top: 15px;
             }
         }
 
@@ -82,13 +88,18 @@ $len: 6;
             left: auto;
             right: 10px;
 
-            &:before {
-              content: "\f105";
-              display: block;
-              width: 50px;
-              height: 50px;
-              text-align: center;
-              margin-right: -2px;
+            // &:before {
+            //   content: "\f105";
+            //   display: block;
+            //   width: 50px;
+            //   height: 50px;
+            //   text-align: center;
+            //   margin-right: -2px;
+            // }
+
+            .icon {
+                vertical-align: -2px;
+                *margin-top: 15px;
             }
         }
     }
@@ -109,7 +120,6 @@ $len: 6;
             float: left;
             width: 10px;
             height: 10px;
-            padding-top: 10px;
             overflow: hidden;
             margin-right: 10px;
             background: #eaeaea;

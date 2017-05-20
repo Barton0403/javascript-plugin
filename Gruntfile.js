@@ -19,7 +19,8 @@ module.exports = (grunt) => {
                     'dist/js/loader.js': 'js/loader.js',
                     'dist/js/form.js': 'js/form.js',
                     'dist/js/form.cache.js': 'js/form.cache.js',
-                    'dist/js/form.check.js': 'js/form.check.js'
+                    'dist/js/form.check.js': 'js/form.check.js',
+                    'dist/js/speed.js': 'js/speed.js'
                 }
             }
         },

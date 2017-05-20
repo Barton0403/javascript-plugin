@@ -4,13 +4,13 @@ import jQuery from 'jquery';
  * 表单检测插件
  * 1、支持text, selector, checkbox, radio, textarea等控件检测
  * 2、自带telephone、email等验证
- * 注意：由于IE堆栈机制，IE9以下不支持oninput的监听
+ * 3、兼容IE7
  ***************************************************************/
 
 const FormCheck = (($) => {
     class FormCheck {
         constructor(selector, options) {
-            this.form = document.querySelector(selector);
+            this.form = $(selector)[0];
             this.options = options;
             this.states = {};
 
@@ -57,7 +57,7 @@ const FormCheck = (($) => {
                 fields
             } = this.options;
 
-            const msgEl = document.querySelector(field.selector),
+            const msgEl = $(field.selector)[0],
                   inputEl = this.form[key],
                   value = $.trim(inputEl.value);
 
@@ -90,7 +90,7 @@ const FormCheck = (($) => {
             }
 
             if (field.validators.same) {
-                const msgEl2 = document.querySelector(fields[field.validators.same.field].selector),
+                const msgEl2 = $(fields[field.validators.same.field].selector)[0],
                     inputEl2 =  this.form[field.validators.same.field],
                     value2 = $.trim(inputEl2.value);
                 if (!FormCheck.checkBySame(field, value, value2)) {

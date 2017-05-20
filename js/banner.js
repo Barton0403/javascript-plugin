@@ -3,8 +3,8 @@ import jQuery from 'jquery';
 /**************************************************************
 * banner轮播插件
 * 1、实现无缝轮播
-* 2、使用了jquery, jquery easing插件
-* 3、兼容IE8
+* 2、使用了jquery插件
+* 3、兼容IE7
 *
 * 注意：由于是无缝轮播，在头部和尾部各多加了张图片，初始下标从1开始
 ***************************************************************/
@@ -19,17 +19,17 @@ const Banner = (($) => {
 
   class Banner {
     constructor(selector, options) {
-      const banner = document.querySelector(selector);
+      const banner = $(selector)[0];
 
       this.props = {
         banner,
-        bannerBody: banner.querySelector('.bd'),
-        banners: banner.querySelectorAll('.bd .banner_item'),
-        indexBody: banner.querySelector('.index_bd'),
-        indexs: banner.querySelectorAll('.index_bd>a'),
-        controlBody: banner.querySelector('.control_bd'),
-        prevBtn: banner.querySelector('.control_bd .prev'),
-        nextBtn: banner.querySelector('.control_bd .next')
+        bannerBody: $(banner).find('.bd')[0],
+        banners: $(banner).find('.bd .banner_item'),
+        indexBody: $(banner).find('.index_bd')[0],
+        indexs: $(banner).find('.index_bd>a'),
+        controlBody: $(banner).find('.control_bd')[0],
+        prevBtn: $(banner).find('.control_bd .prev')[0],
+        nextBtn: $(banner).find('.control_bd .next')[0]
       };
 
       length = this.props.banners.length; // 获取banner数量
@@ -102,7 +102,8 @@ const Banner = (($) => {
         let target = e.srcElement || e.target;
 
         if (!isTransition && target.nodeName === 'A') {
-          this.go(parseInt(target.innerText));
+          this.go(parseInt($(target).data('index')));
+
         }
       };
     }
@@ -221,7 +222,7 @@ const Banner = (($) => {
 
       let i; // banner下标控制器的下标
       if (index === length - 1) i = 0;
-      else if (index === 0) index = length - 2;
+      else if (index === 0) i = length - 3;
       else i = index - 1;
 
       $(indexs).attr('class', '');

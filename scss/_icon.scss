@@ -1,0 +1,18 @@
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url('/images/icons.png');
+    background-repeat: no-repeat;
+}
+
+.icon-left-jt {
+    background-position: 0 0;
+    width: 12px;
+    height: 20px;
+}
+
+.icon-right-jt {
+    background-position: -12px 0;
+    width: 12px;
+    height: 20px;
+}
