@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>表单本地缓存数据</title>
     <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
-    <link rel="stylesheet" href="./dist/css/form.css">
+    <link rel="stylesheet" href="./dist/css/barton.min.css">
+    <link rel="stylesheet" href="./dist/css/barton-plugin.min.css">
 </head>
 
 <body>
@@ -105,7 +106,7 @@
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
     <!--<![endif]-->
 
-    <script src="./dist/js/form.cache.js"></script>
+    <script type="text/javascript" src="./dist/js/barton-plugin.min.js"></script>
     <!-- livereload -->
     <!-- <script type="text/javascript" src="http://localhost:35729/livereload.js"></script> -->
 
@@ -113,29 +114,29 @@
         var f = null;
         if (window.localStorage) {
             f = new FormCache('.AndroidForm', {
-               fields: {
-                   txtAndroidNum: {
-                       type: 'text'
-                   },
-                   ddlServerTime: {
-                       type: 'select'
-                   },
-                   chkFunc: {
-                       type: 'checkbox'
-                   },
-                   rNullity: {
-                       type: 'radio'
-                   },
-                   descration: {
-                       type: 'textarea'
-                   }
-               }
-           });
-       } else {
-           alert('该浏览器不支持本地储存');
-       }
+                fields: {
+                    txtAndroidNum: {
+                        type: 'text'
+                    },
+                    ddlServerTime: {
+                        type: 'select'
+                    },
+                    chkFunc: {
+                        type: 'checkbox'
+                    },
+                    rNullity: {
+                        type: 'radio'
+                    },
+                    descration: {
+                        type: 'textarea'
+                    }
+                }
+            });
+        } else {
+            alert('该浏览器不支持本地储存');
+        }
 
-        f.reset(function () {
+        f.reset(function() {
             alert('成功还原数据');
         });
 
