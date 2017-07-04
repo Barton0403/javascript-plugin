@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FormDate</title>
+
+    <link rel="stylesheet" href="./dist/css/barton.min.css">
+    <link rel="stylesheet" href="./dist/css/barton-plugin.min.css">
+  </head>
+  <body>
+    <div class="date-selector">
+      <input type="text" placeholder="请选择开始日期">
+      <div class="selector">
+        <div class="top">
+          <span class="text"></span>
+          <a class="btn prev">&lt;</a>
+          <a class="btn next">&gt;</a>
+        </div>
+        <div class="weeks clearfix">
+          <span>日</span>
+          <span>一</span>
+          <span>二</span>
+          <span>三</span>
+          <span>四</span>
+          <span>五</span>
+          <span>六</span>
+        </div>
+        <div class="days clearfix">
+        </div>
+        <div class="months clearfix" style="display: none;">
+        </div>
+      </div>
+    </div>
+    <!-- &nbsp;-&nbsp;
+    <input type="text" placeholder="请选择结束日期"> -->
+
+    <!--[if IE]>
+      <script type="text/javascript" src="./js/jquery-1.9.0.min.js"></script>
+    <![endif]-->
+    <!--[if !IE]><!-->
+      <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <!--<![endif]-->
+
+    <script type="text/javascript" src="./dist/js/barton-plugin.min.js"></script>
+    </script>
+    <script>
+      var formDate = new FormDate('.date-selector>input');
+    </script>
+
+    <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
+  </body>
+</html>

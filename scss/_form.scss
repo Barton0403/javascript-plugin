@@ -18,3 +18,105 @@
 .textarea.error {
     border: 1px solid #e03406;
 }
+
+.date-selector {
+  position: relative;
+  font-size: 12px;
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #000;
+  }
+
+  a:hover {
+    background: #eaeaea;
+  }
+
+  .selector {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+
+    .top {
+      position: relative;
+      text-align: center;
+      padding: 5px 0;
+
+      .text {
+        cursor: pointer;
+      }
+
+      >a {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        width: 25px;
+        line-height: 25px;
+        text-align: center;
+      }
+
+      .prev {
+        left: 0px;
+      }
+
+      .next {
+        right: 0px;
+      }
+    }
+
+    .weeks {
+      >span {
+        display: block;
+        float: left;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+      }
+    }
+
+    .days {
+      width: 175px;
+
+      >a {
+        display: block;
+        float: left;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+
+        &.dark {
+          color: #797979;
+        }
+
+        &.selected {
+          background-color: #eaeaea;
+        }
+      }
+    }
+
+    .months {
+      width: 175px;
+
+      >a {
+        display: block;
+        float: left;
+        width: 29.166px;
+        height: 29.166px;
+        line-height: 29.166px;
+        text-align: center;
+
+        &.selected {
+          background-color: #eaeaea;
+        }
+      }
+    }
+  }
+
+  >input:focus + .selector {
+    display: block;
+  }
+}

@@ -21,6 +21,7 @@ module.exports = (grunt) => {
 					'dist/js/form.js': 'js/form.js',
 					'dist/js/form.cache.js': 'js/form.cache.js',
 					'dist/js/form.check.js': 'js/form.check.js',
+					'dist/js/form.date.js': 'js/form.date.js',
 					'dist/js/speed.js': 'js/speed.js'
 				}
 			}
@@ -123,6 +124,7 @@ module.exports = (grunt) => {
 						'dist/js/form.js',
 						'dist/js/form.cache.js',
 						'dist/js/form.check.js',
+						'dist/js/form.date.js',
 						'dist/js/loader.js'
 					],
 				}
@@ -153,6 +155,6 @@ module.exports = (grunt) => {
 	require('load-grunt-tasks')(grunt);
 
 	grunt.registerTask('default', ['clean', 'babel', 'concat:js', 'uglify', 'sass', 'postcss', 'concat:css', 'watch']);
-	grunt.registerTask('css', ['clean:css', 'sass', 'postcss', 'concat:css']);
-	grunt.registerTask('js', ['clean:js', 'babel', 'concat:js', 'uglify']);
+	grunt.registerTask('css', ['clean:css', 'sass', 'postcss', 'concat:css', 'watch:sass']);
+	grunt.registerTask('js', ['clean:js', 'babel', 'concat:js', 'uglify', 'watch:es6']);
 };
