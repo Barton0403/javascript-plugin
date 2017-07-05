@@ -1,12 +1,36 @@
 * {
-    // box-sizing: border-box;
+	// box-sizing:border-box;
+	// margin: 0;
+	// padding: 0;
 }
 
 body {
   font-family: "HelveticaNeue-Light","HelvLightIBM",Arial,sans-serif;
   font-size: 12px;
+	padding: 0;
+	margin: 0;
+}
+
+input {
+    outline: none;
+}
+
+input::-ms-clear{
+    display:none;
 }
 
 a:focus{
   outline:none;
+}
+
+img {
+	border: 0 none;
+}
+
+.aspNetDisabled {
+  color: #ccc;
+}
+
+.dropdown {
+    cursor: pointer
 }

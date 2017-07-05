@@ -1,10 +1,23 @@
-@import "reset";
-@import "util";
-
 .listTdLeft {
   width: 150px;
   padding: 5px 0;
   text-align: right;
+}
+
+.form-label {
+  vertical-align: middle;
+  padding: 2.5px 0;
+}
+
+.form-control {
+    width: 150px;
+    display: block;
+    vertical-align: middle;
+    padding: 2.5px;
+}
+
+.form-inline {
+    display: inline;
 }
 
 .input {
@@ -34,10 +47,13 @@
   }
 
   .selector {
-    display: none;
     position: absolute;
+    left: 0;
+    top: 100%;
     background: #fff;
     border: 1px solid #ccc;
+    z-index: 999;
+    display: none;
 
     .top {
       position: relative;
@@ -67,6 +83,8 @@
     }
 
     .weeks {
+      width: 175px;
+
       >span {
         display: block;
         float: left;
@@ -95,6 +113,16 @@
         &.selected {
           background-color: #eaeaea;
         }
+
+        &.disabled {
+          cursor: none;
+          pointer-events: none;
+          color: #acacac;
+
+          &:hover {
+            background: none;
+          }
+        }
       }
     }
 
@@ -111,6 +139,16 @@
 
         &.selected {
           background-color: #eaeaea;
+        }
+
+        &.disabled {
+          cursor: none;
+          pointer-events: none;
+          color: #acacac;
+
+          &:hover {
+            background: none;
+          }
         }
       }
     }

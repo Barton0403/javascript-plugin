@@ -1,5 +1,11 @@
 import jQuery from 'jquery';
 
+/**************************************************************
+ * 日期选择插件
+ * 1、支持范围控制
+ * 2、兼容IE7
+ ***************************************************************/
+
 var FormDate = (function ($) {
   function formatDate(date) {
     var month = date.getMonth() + 1,
@@ -9,18 +15,32 @@ var FormDate = (function ($) {
     return year + '年' + month + '月' + day + '日';
   }
 
-  function formatTime(date) {
-    var hours = date.getHours(),
-      minutes = date.getMinutes(),
-      seconds = date.getSeconds(),
-      milliseconds = date.getMilliseconds();
+  // function formatTime(date) {
+  //   var hours = date.getHours(),
+  //     minutes = date.getMinutes(),
+  //     seconds = date.getSeconds(),
+  //     milliseconds = date.getMilliseconds();
+  //
+  //   return hours + ':' + minutes + ':' + seconds + ':' + milliseconds;
+  // }
 
-    return hours + ':' + minutes + ':' + seconds + ':' + milliseconds;
+  function clearTime(date) {
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+
+    return date;
   }
 
   var dayMS = 1000 * 3600 * 24; // 一天毫秒数
 
-  function FormDate(selector) {
+  function FormDate(selector, options) {
+    if (options) {
+      this.getMaxDate = options.getMaxDate;
+      this.getMinDate = options.getMinDate;
+    }
+
     var $input = $(selector),
       $dateSelector = $input.parent(),
       $selector = $dateSelector.find('.selector'),
@@ -45,7 +65,7 @@ var FormDate = (function ($) {
       selectedDate = new Date();
     }
     $input.val(formatDate(selectedDate));
-    this.selectedDate = selectedDate;
+    this.selectedDate = clearTime(selectedDate);
 
     // 设置顶部显示
     this.setText = function () {
@@ -61,6 +81,11 @@ var FormDate = (function ($) {
       if (firstFocus) {
         firstFocus = false;
 
+        $selector.css('display', 'block');
+
+        if (_this.getMaxDate) _this.maxDate = _this.getMaxDate();
+        if (_this.getMinDate) _this.minDate = _this.getMinDate();
+
         _this.showDate = _this.selectedDate;
 
         _this.setText();
@@ -73,6 +98,7 @@ var FormDate = (function ($) {
         $(this).focus();
       } else {
         firstFocus = true;
+        $selector.css('display', 'none');
       }
     });
     $selector.on('mouseover', function () {
@@ -88,12 +114,12 @@ var FormDate = (function ($) {
 
         // 防止月份溢出
         if (month <= 0) {
-          _this.showDate = new Date((_this.showDate.getFullYear() - 1) + '-12' + '-' + _this.showDate.getDate() + ' ' + formatTime(_this.showDate));
+          _this.showDate = new Date((_this.showDate.getFullYear() - 1) + '/12' + '/' + _this.showDate.getDate());
         } else {
-          _this.showDate = new Date(_this.showDate.getFullYear() + '-' + month + '-' + _this.showDate.getDate() + ' ' + formatTime(_this.showDate));
+          _this.showDate = new Date(_this.showDate.getFullYear() + '/' + month + '/' + _this.showDate.getDate());
         }
       } else if (selectType == 'month') {
-        _this.showDate = new Date((_this.showDate.getFullYear() - 1) + '-' + (_this.showDate.getMonth() + 1) + '-' + _this.showDate.getDate() + ' ' + formatTime(_this.showDate));
+        _this.showDate = new Date((_this.showDate.getFullYear() - 1) + '/' + (_this.showDate.getMonth() + 1) + '/' + _this.showDate.getDate());
       }
 
       // DOM渲染
@@ -109,12 +135,12 @@ var FormDate = (function ($) {
 
         // 防止月份溢出
         if (month >= 11) {
-          _this.showDate = new Date((_this.showDate.getFullYear() + 1) + '-1' + '-' + _this.showDate.getDate() + ' ' + formatTime(_this.showDate));
+          _this.showDate = new Date((_this.showDate.getFullYear() + 1) + '/1' + '/' + _this.showDate.getDate());
         } else {
-          _this.showDate = new Date(_this.showDate.getFullYear() + '-' + (month + 2) + '-' + _this.showDate.getDate() + ' ' + formatTime(_this.showDate));
+          _this.showDate = new Date(_this.showDate.getFullYear() + '/' + (month + 2) + '/' + _this.showDate.getDate());
         }
       } else if (selectType == 'month') {
-        _this.showDate = new Date((_this.showDate.getFullYear() + 1) + '-' + (_this.showDate.getMonth() + 1) + '-' + _this.showDate.getDate() + ' ' + formatTime(_this.showDate));
+        _this.showDate = new Date((_this.showDate.getFullYear() + 1) + '/' + (_this.showDate.getMonth() + 1) + '/' + _this.showDate.getDate());
       }
 
       _this.setText();
@@ -123,16 +149,22 @@ var FormDate = (function ($) {
       // console.log(_this.showDate.toLocaleString());
     });
     $days.on('click', function (e) {
-      var target = e.srcElement || e.target,
-        $day = $(target),
+      var target = e.srcElement || e.target;
+
+      // 只获取a节点的点击事件
+      if (target.nodeName != 'A' || $(target).hasClass('disabled')) {
+        return;
+      }
+
+      var  $day = $(target),
         text = $day.text();
 
       if ($day.hasClass('last-month-day')) {
-        _this.selectedDate = new Date(_this.showDate.getFullYear() + '-' + _this.showDate.getMonth() + '-' + text);
+        _this.selectedDate = new Date(_this.showDate.getFullYear() + '/' + _this.showDate.getMonth() + '/' + text);
       } else if ($day.hasClass('next-month-day')) {
-        _this.selectedDate = new Date(_this.showDate.getFullYear() + '-' + (_this.showDate.getMonth() + 2) + '-' + text);
+        _this.selectedDate = new Date(_this.showDate.getFullYear() + '/' + (_this.showDate.getMonth() + 2) + '/' + text);
       } else {
-        _this.selectedDate = new Date(_this.showDate.getFullYear() + '-' + (_this.showDate.getMonth() + 1) + '-' + text);
+        _this.selectedDate = new Date(_this.showDate.getFullYear() + '/' + (_this.showDate.getMonth() + 1) + '/' + text);
       }
 
       blur = true;
@@ -140,10 +172,15 @@ var FormDate = (function ($) {
       $input.val(formatDate(_this.selectedDate));
     });
     $months.on('click', function (e) {
-      var target = e.srcElement || e.target,
-        $month = $(target);
+      var target = e.srcElement || e.target;
 
-      _this.showDate = new Date(_this.showDate.getFullYear() + '-' + $month.data('month') + '-' + _this.showDate.getDate() + ' ' + formatTime(_this.showDate));
+      // 只获取a节点的点击事件
+      if (target.nodeName != 'A' || $(target).hasClass('disabled')) {
+        return;
+      }
+
+      var  $month = $(target);
+      _this.showDate = new Date(_this.showDate.getFullYear() + '/' + $month.data('month') + '/' + _this.showDate.getDate());
 
       _this.generateDays();
       $text.click();
@@ -192,11 +229,17 @@ var FormDate = (function ($) {
       } else if (generateDate.valueOf() == _this.selectedDate.valueOf()) {
         $temple.addClass('selected');
       }
+
+      if ((_this.maxDate && generateDate.valueOf() > _this.maxDate.valueOf()) ||
+        (_this.minDate && generateDate.valueOf() < _this.minDate.valueOf())) {
+        $temple.addClass('disabled');
+      }
       // 渲染DOM
       this.$days.append($temple);
       // 增加一天
       generateDate = new Date(generateDate.valueOf() + dayMS);
     }
+    this.$days.append('<div class="clear"></div>');
   };
 
   FormDate.prototype.generateMonths = function () {
@@ -204,15 +247,38 @@ var FormDate = (function ($) {
 
     _this.$months.html('');
     for (var i = 1; i <= 12; i++) {
-      var $temple = $('<a data-month="' + i +'">');
+      var $temple = $('<a>');
+      $temple.attr('data-month', i);
       $temple.text(i + '月');
 
       if (i == (_this.selectedDate.getMonth() + 1) && _this.selectedDate.getFullYear() == _this.showDate.getFullYear()) {
         $temple.addClass('selected');
       }
 
-      _this.$months.append($temple);
+      // 检查日期范围
+      if (
+        (_this.maxDate &&
+          (
+            (i > (_this.maxDate.getMonth() + 1) && _this.maxDate.getFullYear() == _this.showDate.getFullYear()) ||
+            _this.maxDate.getFullYear() <  _this.showDate.getFullYear()
+          )
+        ) || (
+          (_this.minDate &&
+            (
+              (i < (_this.minDate.getMonth() + 1) && _this.minDate.getFullYear() == _this.showDate.getFullYear()) ||
+              _this.minDate.getFullYear() > _this.showDate.getFullYear()
+            )
+          )
+        )
+      ) {
+        $temple.addClass('disabled');
+      }
+
+      this.$months.append($temple);
     }
+    this.$months.append('<div class="clear"></div>');
+
+    // debugger
   };
 
   return FormDate;
