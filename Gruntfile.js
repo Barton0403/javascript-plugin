@@ -154,7 +154,7 @@ module.exports = (grunt) => {
 
 	require('load-grunt-tasks')(grunt);
 
-	grunt.registerTask('default', ['clean', 'babel', 'concat:js', 'uglify', 'sass', 'postcss', 'concat:css', 'watch']);
-	grunt.registerTask('css', ['clean:css', 'sass', 'postcss', 'concat:css', 'watch:sass']);
-	grunt.registerTask('js', ['clean:js', 'babel', 'concat:js', 'uglify', 'watch:es6']);
+	grunt.registerTask('default', ['js', 'css', 'watch']);
+	grunt.registerTask('css', ['clean:css', 'sass', 'postcss', 'concat:css']);
+	grunt.registerTask('js', ['clean:js', 'babel', 'concat:js', 'uglify']);
 };
